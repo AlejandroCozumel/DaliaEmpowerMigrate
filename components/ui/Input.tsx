@@ -4,7 +4,7 @@ import { BiDollar } from "react-icons/bi";
 
 interface InputProps {
   id: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   type?: string;
   disabled?: boolean;
@@ -29,6 +29,14 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div className="w-full relative">
+      {label && (
+        <label
+          htmlFor={id}
+          className={`text-md ${errors?.[id] ? "text-red-500" : ""}`}
+        >
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+      )}
       <div className="w-full relative mt-2">
         {formatPrice && (
           <BiDollar

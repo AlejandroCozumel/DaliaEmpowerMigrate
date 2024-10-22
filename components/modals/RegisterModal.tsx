@@ -48,7 +48,6 @@ const RegisterModal = () => {
       <Heading title="Welcome to Dalia Mentor" subtitle="Create an account!" />
       <Input
         id="email"
-        label="Email"
         placeholder="Email"
         disabled={isLoading}
         register={register}
@@ -57,7 +56,6 @@ const RegisterModal = () => {
       />
       <Input
         id="name"
-        label="Name"
         placeholder="Name"
         disabled={isLoading}
         register={register}
@@ -66,7 +64,6 @@ const RegisterModal = () => {
       />
       <Input
         id="password"
-        label="Password"
         placeholder="Password"
         type="password"
         disabled={isLoading}

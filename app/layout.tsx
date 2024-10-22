@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import ModalsWrapper from "@/providers/ModalsWrapper";
+import { ApolloWrapper } from "@/apollo/ApolloWrapper";
 import "./globals.css";
 
 const nexaFont = localFont({
@@ -41,9 +42,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nexaFont.variable} font-nexa antialiased`}>
-        <ModalsWrapper />
-        {children}
+      <body
+        className={`${nexaFont.variable} font-nexa font-normal antialiased`}
+      >
+        <ApolloWrapper>
+          <ModalsWrapper />
+          {children}
+        </ApolloWrapper>
       </body>
     </html>
   );

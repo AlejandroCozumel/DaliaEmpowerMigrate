@@ -78,10 +78,10 @@ const NavLeft = ({ setIsOpen }: NavLeftProps) => {
         <FiMenu />
       </motion.button>
       <Logo />
-      <NavLink text="Solutions" />
-      <NavLink text="Community" />
-      <NavLink text="Pricing" />
-      <NavLink text="Company" />
+      <NavLink text="Comunidad" />
+      <NavLink text="Programa ADN" />
+      <NavLink text="Para empresas" />
+      <NavLink text="Talks" />
     </div>
   );
 };
@@ -120,10 +120,10 @@ const NavMenu = ({ isOpen }: NavMenuProps) => {
       animate={isOpen ? "open" : "closed"}
       className="absolute p-4 bg-white shadow-lg left-0 right-0 top-full origin-top flex flex-col gap-4"
     >
-      <MenuLink text="Solutions" />
-      <MenuLink text="Community" />
-      <MenuLink text="Pricing" />
-      <MenuLink text="Company" />
+      <MenuLink text="Comunidad" />
+      <MenuLink text="Programa ADN" />
+      <MenuLink text="Para empresas" />
+      <MenuLink text="Talks" />
     </motion.div>
   );
 };
