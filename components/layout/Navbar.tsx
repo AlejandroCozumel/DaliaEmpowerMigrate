@@ -5,7 +5,6 @@ import { useState } from "react";
 import { FiMenu, FiArrowRight } from "react-icons/fi";
 // import ThemeSwitcher from "@/components/layout/ThemeSwitcher";
 import UserMenu from "./UserMenu";
-// import { SafeUser } from "@/types";
 import Container from "./Container";
 
 interface NavLeftProps {

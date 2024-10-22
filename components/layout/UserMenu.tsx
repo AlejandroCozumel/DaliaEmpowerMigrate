@@ -3,8 +3,8 @@ import { useCallback, useState } from "react";
 // import { signOut } from "next-auth/react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-// import useLoginModal from "@/hooks/useLoginModal";
-// import useRegisterModal from "@/hooks/useRegisterModal";
+import useLoginModal from "@/hooks/useLoginModal";
+import useRegisterModal from "@/hooks/useRegisterModal";
 // import useBeMentorModal from "@/hooks/useBeMentorModal";
 import MenuItem from "./MenuItem";
 import Avatar from "./Avatar";
@@ -12,8 +12,8 @@ import Avatar from "./Avatar";
 const UserMenu = () => {
   const router = useRouter();
 
-  // const loginModal = useLoginModal();
-  // const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
   // const beMentorModal = useBeMentorModal();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -30,15 +30,15 @@ const UserMenu = () => {
   //   beMentorModal.onOpen();
   // }, [loginModal, beMentorModal, currentUser]);
 
-  // const handleClickLogin = () => {
-  //   loginModal.onOpen();
-  //   toggleOpen();
-  // };
+  const handleClickLogin = () => {
+    loginModal.onOpen();
+    toggleOpen();
+  };
 
-  // const handleClickRegister = () => {
-  //   registerModal.onOpen();
-  //   toggleOpen();
-  // };
+  const handleClickRegister = () => {
+    registerModal.onOpen();
+    toggleOpen();
+  };
 
   // const handleLogout = () => {
   //   signOut();
@@ -151,12 +151,10 @@ const UserMenu = () => {
             ) : ( */}
               <>
                 <MenuItem label="Login"
-                onClick={() => {}}
-                // onClick={handleClickLogin}
+                onClick={handleClickLogin}
                  />
                 <MenuItem label="Sign up"
-                    onClick={() => {}}
-                // onClick={handleClickRegister}
+                onClick={handleClickRegister}
                  />
               </>
             {/* )} */}
