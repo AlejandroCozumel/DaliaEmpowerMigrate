@@ -46,8 +46,8 @@ export default function RootLayout({
         className={`${nexaFont.variable} font-nexa font-normal antialiased`}
       >
         <ApolloWrapper>
-          <ModalsWrapper />
-          {children}
+            <ModalsWrapper />
+            {children}
         </ApolloWrapper>
       </body>
     </html>

@@ -5,8 +5,9 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@apollo/client";
-import { LOGIN_APP_USER } from "@/apollo/Queries";
+import { useMutation, useApolloClient } from '@apollo/client';
+import { LOGIN_APP_USER, GET_MEMBERSHIPS_SUBSCRIPTIONS } from "@/apollo/Queries";
+import useAuthStore from '@/hooks/useAuthStore';
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import Modal from "./Modal";
@@ -29,24 +30,60 @@ interface LoginVariables {
   };
 }
 
+interface Subscription {
+  _id: string;
+  name: string;
+  duration: number;
+  durationType: string;
+  freeTrial: boolean;
+  startDate: string;
+}
+
 const LoginModal = () => {
   const router = useRouter();
+  const client = useApolloClient();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
+  const { login, setSubscription, setLastSubscriptionFetch } = useAuthStore();
 
   const [loginMutation] = useMutation<LoginResponse, LoginVariables>(
     LOGIN_APP_USER,
     {
-      onCompleted: (data) => {
+      onCompleted: async (data) => {
         if (data.loginAppUser.success) {
           console.log('Login successful!', data);
-          localStorage.setItem("dalia.auth.login", data.loginAppUser.token);
+
+          const { token } = data.loginAppUser;
+          localStorage.setItem("dalia.auth.login", token);
+          login(token, { id: '', email: '' }); // Add user data if available
+
+          // Fetch subscription directly after login
+          try {
+            const { data: subData } = await client.query({
+              query: GET_MEMBERSHIPS_SUBSCRIPTIONS,
+              fetchPolicy: 'network-only'
+            });
+
+            if (subData?.getMembershipSubscriptions?.length > 0) {
+              const subscription = subData.getMembershipSubscriptions[0];
+              console.log('User subscription:', subscription);
+              setSubscription(subscription);
+              setLastSubscriptionFetch(Date.now());
+            } else {
+              console.log('No subscription found');
+              setSubscription(null);
+            }
+          } catch (error) {
+            console.error('Error fetching subscription:', error);
+          }
+
           loginModal.onClose();
         }
       },
       onError: (error) => {
         console.error('Login failed:', error);
+        setIsLoading(false);
       }
     }
   );
@@ -75,7 +112,6 @@ const LoginModal = () => {
       });
     } catch (error) {
       console.error('Error during login:', error);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -83,7 +119,7 @@ const LoginModal = () => {
   const handleSocialSignIn = useCallback((provider: 'google' | 'github') => {
     setIsLoading(true);
     console.log('sign in social')
-  }, [loginModal, router]);
+  }, []);
 
   const onToggle = useCallback(() => {
     loginModal.onClose();

@@ -9,3 +9,16 @@ export const LOGIN_APP_USER = gql`
     }
   }
 `
+
+export const GET_MEMBERSHIPS_SUBSCRIPTIONS = gql`
+  query GetMembershipSubscriptions {
+    getMembershipSubscriptions {
+      _id
+      name
+      duration
+      durationType
+      freeTrial
+      startDate
+    }
+  }
+`;
